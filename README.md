@@ -1,4 +1,4 @@
-# Public-work
+# Timetable
 
 This app is made for my degree. The subject was to creating a smart timetable for students to their smart phones. I created a web application what you see on this branch.
 
