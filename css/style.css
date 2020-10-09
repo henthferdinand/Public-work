@@ -1,0 +1,77 @@
+/*KEZDŐLAP ÉS SZÖVEGTÖRZS*/    
+    body{
+        background-color: rgba(50, 110, 200, 0.9);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+    }
+
+    #menu img{
+        margin-left: 20px;
+        margin-top: 20px;
+        height: 7%;
+        width: 7%;
+    }
+
+    #header{
+       font-size: 50px;                  
+       margin-top: 150px;
+       margin-right: 100px;
+       margin-left: 100px;
+       margin-bottom: 50px;       
+       text-align: left;
+    }
+
+    #header ul{
+        margin:0;
+    }
+
+    #header ul li{
+        display: inline-block;
+        font-size: 35px;
+        margin:0;
+        padding-left: 3px;
+        padding-bottom: 15px;
+        padding-right: 5px;
+    }
+
+
+    #table{
+        font-size: 25px;
+        text-align: center;   
+        margin-left: 100px;
+        margin-right: 100px;
+        height: 1200px;      
+        overflow: auto;
+    }
+
+    #table button{
+        float: right;
+        margin-right: 40px;
+    }
+
+   #table div{          
+        margin: 0;
+        margin-top: 50px;
+        margin-bottom: 50px;        
+        margin-right: 50px;
+        margin-left: 50px;
+        padding-top:25px;
+        padding-bottom: 25px;
+        border-radius: 2cm;
+    }
+
+    .cancelled{
+        color: red;
+    }
+
+    a{
+        text-decoration: none;
+    }
+
+
+
+
+
+

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet"  href="css/w3.css">
+        <title>Time table</title>
+    </head>
+
+    <script>
+        var selectedMenu = 0;
+
+        //oldalsáv gombok megjelenetíése
+        function buttons(){
+            var xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if(this.responseText==false){
+                                        
+                        //console.log(this.responseText);
+                        var buttonLogIn='<h3 class="w3-padding-64 w3-center"><b>'+this.responseText+'</b></h3><br><a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-center w3-padding-32">Menü bezárása</a><a class="w3-bar-item w3-button" id="login" onclick="loginSection(),w3_close()" >Belépés</a>';
+                        document.getElementById("mySidebar").innerHTML =buttonLogIn; 
+                        document.getElementById("userName").innerHTML = " "; 
+                    }
+                    else{
+                        //console.log(this.responseText);
+                        var buttonLogOut='<h3 class="w3-padding-64 w3-center w3-xxlarge"><b>'+this.responseText+'</b></h3><br><a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-center w3-padding-32">Menü bezárása</a><br><a onclick="w3_close(),menuChoose('+"'personal'"+'),personalTimeTable('+"'Hétfő'"+')" class="w3-bar-item w3-button">Saját órarend</a><br><a onclick="w3_close(),menuChoose('+"'global'"+'),showDailyCourse('+"'Hétfő'"+')" class="w3-bar-item w3-button">Órarend a szakon</a><br><a class="w3-bar-item w3-button" id="login" onclick="logOutSection(),w3_close()" >Kilépés</a>';
+                        document.getElementById("mySidebar").innerHTML =buttonLogOut;
+                        document.getElementById("userName").innerHTML =this.responseText;
+                    }
+                }
+            };
+
+            xmlhttp.open("GET", "src/session.php", true);
+            xmlhttp.send(); 
+        };
+
+        function menuChoose(menu){
+            selectedMenu = menu.toString();
+            console.log(selectedMenu);
+        }
+
+        //gomb megjelenítő függvény meghívása
+        buttons();
+        
+        //login felület kiírása
+        function loginSection(){
+
+             var log = '<div id="logInForm"> 		<label for="neptunCode">Neptun kód</label>		</br>		<input type="text" name="nepCode" id="inputNeptunCode" class="w3-input w3-text-dark-grey">		</br></br>		<label for="neptunPassword">Jelszó</label>		</br>		<input type="password" name="nepPassword" id="inputNeptunPassword" class="w3-input w3-text-dark-grey ">		</br></br>		<input class="w3-btn w3-dark-grey w3-hover-black" type="submit" name="login" value="Bejelentkezés" onclick="login()">		</div>';
+            
+            document.getElementById("table").innerHTML = log;        
+
+        };
+        
+        //login folyamat indítása 
+        function login(){
+            
+            var user = document.getElementById("inputNeptunCode").value;
+            var pass = document.getElementById("inputNeptunPassword").value;
+            var xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if(this.responseText){
+                        document.getElementById("table").innerHTML =this.responseText;
+                    }
+                }
+            };
+
+            console.log(user);
+            console.log(pass);
+
+            var link= "src/login.php?user="+user+"&&pass="+pass;
+            xmlhttp.open("GET", link, true);
+            xmlhttp.send(); 
+        };
+        
+        //logout folyamat indítása
+        function logOutSection(){
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("table").innerHTML = this.responseText; 
+                }
+            }
+
+            xmlhttp.open("GET", "src/logout.php", true);
+            xmlhttp.send(); 
+            
+            document.getElementById("choosedMenu").innerHTML ="";
+        };
+
+        //figyelmeztetést küld óra előtt 
+        alertBeforeLesson();  
+        //kiírja az akutális nap óráit 
+        actualDayCourses();
+
+        //saját órarend kiírása
+        function personalTimeTable(nap){
+            
+            if(selectedMenu == "personal"){
+                boldToNormal();
+                document.getElementById(nap).style.fontWeight="bold"; 
+                if (nap == "") {
+                    document.getElementById("table").innerHTML = "";
+                    alertBeforeLesson()           
+                    return;
+                } else {
+                    alertBeforeLesson();
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+
+                            var courseData = this.responseText;
+                            document.getElementById("table").innerHTML = courseData;
+
+                        }
+                    };
+                    xmlhttp.open("GET","src/personalCourse.php?day="+nap,true);
+                    xmlhttp.send();
+                }
+                
+                document.getElementById("choosedMenu").innerHTML ="Saját órarend";
+            }
+        };
+
+        //kiírja a kiválasztott nap óráit
+        function showDailyCourse(nap) { 
+            
+            if(selectedMenu == "global" || selectedMenu == 0){
+                console.log(nap);
+                boldToNormal();
+                document.getElementById(nap).style.fontWeight="bold"; 
+                if (nap == "") {
+                    document.getElementById("table").innerHTML = "";
+                    alertBeforeLesson()           
+                    return;
+                } else {
+                    alertBeforeLesson();
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+
+                            var courseData = this.responseText;
+                            document.getElementById("table").innerHTML = courseData;
+
+                        }
+                    };
+                    xmlhttp.open("GET","src/courseData.php?day="+nap,true);
+                    xmlhttp.send();
+                }
+                document.getElementById("choosedMenu").innerHTML ="Órarend a szakon";
+            }
+
+        };
+
+        //az aktuális nap órái
+        function actualDayCourses(){
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var courseData = this.responseText;
+                    document.getElementById("table").innerHTML = courseData;
+                    actualDayToBold();
+                }
+            };
+            xmlhttp.open("GET", "src/actualDayCourse.php?day=actual", true);
+            xmlhttp.send();
+        };
+
+        //kurzus felvétele a saját órarendbe
+        function addCourse(crs){
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(crs);
+                    document.getElementById("table").innerHTML = alert(this.responseText);
+                    showDailyCourse('Hétfő');
+                    
+                }
+            };
+            xmlhttp.open("GET","src/addCoursePersonaltt.php?course="+crs,true);
+            xmlhttp.send();   
+
+        };
+        
+        //elmaradó órára figyelmeztetés
+        function alertCancelledCourse(crs){
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    alert(this.responseText);
+                }
+            };
+            xmlhttp.open("GET", "src/cancelledCourse.php?course="+crs, true);
+            xmlhttp.send();
+        };
+
+        /*function showDailyCourse(nap) {                      
+
+            boldToNormal();
+            document.getElementById(nap).style.fontWeight="bold"; 
+            if (nap == "") {
+                document.getElementById("table").innerHTML = "";
+                alertBeforeLesson()           
+                return;
+            } else {
+                alertBeforeLesson();
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+
+                        var courseData = this.responseText;
+                        document.getElementById("table").innerHTML = courseData;
+
+                    }
+                };
+                xmlhttp.open("GET","src/courseData.php?day="+nap,true);
+                xmlhttp.send();
+            }
+        };*/
+
+        function getDayFromHeader(nap){
+            return nap;
+        }
+
+        //visszaállítja a napok neveit félkövérről
+        function boldToNormal(){
+
+            if(document.getElementById("Hétfő").style.fontWeight == "bold"){                
+                document.getElementById("Hétfő").style.fontWeight="normal";
+            }
+
+            if(document.getElementById("Kedd").style.fontWeight == "bold"){                
+                document.getElementById("Kedd").style.fontWeight="normal";
+            }
+
+            if(document.getElementById("Szerda").style.fontWeight == "bold"){                
+                document.getElementById("Szerda").style.fontWeight="normal";
+            }
+
+            if(document.getElementById("Csütörtök").style.fontWeight == "bold"){                
+                document.getElementById("Csütörtök").style.fontWeight="normal";
+            }
+
+            if(document.getElementById("Péntek").style.fontWeight == "bold"){                
+                document.getElementById("Péntek").style.fontWeight="normal";
+            }
+
+        };
+
+        //figyelmeztetést küld óra előtt
+        function alertBeforeLesson(){
+            
+            var timeVar = setInterval(myTimer, 1000);            
+        };
+
+        //az aktuális napot félkövérre színezi
+        function actualDayToBold(){
+            var day = new Date();
+            var dayNumber = day.getDay();
+           //console.log(dayNumber);
+            switch (dayNumber){
+                case 1:                
+                    document.getElementById("Hétfő").style.fontWeight="bold";
+                    break;
+                case 2:
+                    document.getElementById("Kedd").style.fontWeight="bold";
+                    break;
+                case 3:
+                    document.getElementById("Szerda").style.fontWeight="bold";
+                    break;
+                case 4:
+                    document.getElementById("Csütörtök").style.fontWeight="bold";
+                    break;
+                case 5:
+                    document.getElementById("Péntek").style.fontWeight="bold";
+                    break;
+                case 6:
+                    document.getElementById("Hétfő").style.fontWeight="bold";
+                    break;
+                case 0:
+                    document.getElementById("Hétfő").style.fontWeight="bold";
+                    break;
+
+            }
+        }
+        
+        //számolja az időt és küldi a szerverre ami ellenőrzi, hogy mikor kezdődik az óra és értesítést küld
+        function myTimer() {            
+            var d = new Date();
+            var d2 = new Date();
+
+            d2.setMinutes(d.getMinutes()+5);
+
+            var xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if(this.responseText != 0){
+                        alert(this.responseText);
+                    }
+                }
+            };
+
+            xmlhttp.open("GET", "src/alert.php?time="+d2.toLocaleTimeString(), true);
+            xmlhttp.send();
+        };
+
+     //ingyen template script
+       // Script to open and close sidebar
+        function w3_open() {
+            document.getElementById("mySidebar").style.display = "block";
+            document.getElementById("myOverlay").style.display = "block";
+        }
+        
+        function w3_close() {
+            document.getElementById("mySidebar").style.display = "none";
+            document.getElementById("myOverlay").style.display = "none";
+        }
+    
+    </script>    
+
+    <body class="w3-light-grey w3-content" style="max-width:1600px">
+
+    <!--Ingyen template-->
+        <!-- Sidebar/menu -->
+            <nav class="w3-sidebar w3-bar-block w3-white w3-animate-left w3-top w3-text-grey w3-xlarge  w3-center" style="z-index:3;width:250px;font-weight:bold;display:none;left:0;" id="mySidebar"></nav>
+
+            <!-- Top menu on small screens -->
+            <header class="w3-container w3-top w3-white w3-xlarge w3-padding-16">
+                <span id="userName" class="w3-left w3-padding w3-xxxlarge"></span>
+                <a href="javascript:void(0)" class="w3-right w3-button w3-white w3-jumbo" onclick="w3_open()">☰</a>
+            </header>
+            
+            <!-- Overlay effect when opening sidebar on small screens -->
+            <div class="w3-overlay w3-animate-left" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+  
+        <div id="header" clas="w3-container w3-section w3-sand">
+            
+            <ul id="napok">
+                <li id="Hétfő" onclick="showDailyCourse('Hétfő'),personalTimeTable('Hétfő')">Hétfő</li>
+                <li id="Kedd" onclick="showDailyCourse('Kedd'),personalTimeTable('Kedd')">Kedd</li>
+                <li id="Szerda" onclick="showDailyCourse('Szerda'),personalTimeTable('Szerda')">Szerda</li>
+                <li id="Csütörtök" onclick="showDailyCourse('Csütörtök'),personalTimeTable('Csütörtök')">Csütörtök</li>
+                <li id="Péntek" onclick="showDailyCourse('Péntek'),personalTimeTable('Péntek')">Péntek</li>
+            </ul>
+
+        </div>
+
+
+        <div id="table" clas="w3-container w3-section w3-sand"></div> 
+        <div id="choosedMenu" class="w3-text-dark-grey w3-padding-64 w3-center w3-xxlarge" ></div>     
+        
+
+    </body>
+</html>
