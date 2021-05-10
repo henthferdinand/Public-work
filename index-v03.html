@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+        <script src="js/generator2.js"></script>
+        <script src="js/newField.js"></script>
+        <script src="js/deleteContent.js"></script>
+        <script src="js/generateId.js"></script>
+        <script src="js/deleteResult.js"></script>
+        <script src="js/isChecked.js"></script>
+        <script src="js/deleteField.js"></script>
+        <script src="js/copyContent.js"></script>
+        <link rel="stylesheet" type="text/css" href="genStyle.css">
+    </head>
+    <body>
+        
+    <div id="menuBar">
+        <button id="generate" type="button" onclick="generate()">Generálás</button>
+    </div>
+
+        <div id="trunk">
+            <div id="field">
+                
+                <div id="newFieldTemp"> </div>
+
+                <textarea id="result"></textarea>
+            </div>
+
+            <div id="options">
+                  <div id="optionButton">  
+                    <button type="button" class="operationButton" onclick="copyContent()">Tartalom másolása</button></br>
+                    <button type="button" class="operationButton" onclick="newField()">Új mező</button>
+                    <button type="button" class="operationButton" onclick="deleteContent()">Mezők ürítése</button><br>
+                    <button type="button" class="operationButton" onclick="deleteField()">Hozzáadott mező törlése</button><br>
+                    <button type="button" class="operationButton" onclick="deleteResult()">Generált mezők törlése</button><br>
+                </div>
+            </div>
+        </div>
+
+    </body>    
+</html>
