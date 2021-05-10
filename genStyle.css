@@ -1,0 +1,201 @@
+
+    body{
+        background: #204051;
+        color: #e4e3e3;
+    }
+
+    label{
+        margin-left: 10px;
+        color: #e4e3e3;
+    }
+
+    input{
+        background: #84a9ac;
+        margin-left: 10px;
+        color: #204051;
+        outline: none;
+    }
+
+    select{
+        margin-left: 10px;
+        color: #204051;
+        background: #84a9ac;
+    }
+
+    /*button{
+        margin-left: 30px;
+        background: silver;
+        border-radius: 30px;
+        height: 40px;
+    }*/
+
+    /*header{
+        margin: 0;
+        padding: 0;
+        height: 100px;
+        background:  #204051;
+        color: black;
+    }
+
+    footer{
+        margin: 0;
+        padding: 0;
+        margin-top: 35px;
+        height: 100px;
+        background:  silver;
+        color: #204051;
+    }*/
+
+    #trunk{
+        margin:0;
+        width: 100%;
+        border: none;
+        display: inline;
+    }
+
+    #menuBar {        
+        margin-top: 10px;
+        padding: 0;
+        padding-top: 3px;
+        border: none;
+        background: #3b6978;
+        width: 100%;
+        height: 60px;
+        text-align: right;
+        color: #e4e3e3;
+    }
+
+    #menuBar button{        
+        margin-top: 4px;
+        margin-right: 5%;
+    }
+
+    #generate{       
+        background-color: #84a9ac;
+        border: none;
+        color: #e4e3e3;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer; 
+        outline: none;      
+    }
+
+    .operationButton {        
+        background-color: #84a9ac;
+        border: none;
+        color: #e4e3e3;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        width: 99%;
+        outline: none; 
+    }
+
+    .deleteOptionButton{
+        color: red;
+        margin-left: 10px;
+        background-color: #84a9ac;        
+        outline: none; 
+        border: none;        
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        height: 20px;
+        width: 20px;
+        font-weight: bolder;
+        text-align: center;
+    }
+
+    #generate:hover,.operationButton:hover{
+        background: #204051;
+    }
+
+    .selectOptionButton:hover,.deleteOptionButton:hover{
+        background: #3b6978;
+    }
+
+    #first_form,#newField{
+        margin:0;
+        margin-left: 1%;
+        padding: 0;
+        padding-top: 3px;
+        padding-bottom: 5px;
+        color: #204051;
+    }
+
+    #newField{
+        color: #204051;
+        margin-top: 0;
+        max-height: 450px;
+        overflow-y: scroll;
+        max-width: 100%;
+    }
+
+    #newFieldTemp{
+        height: 450px;
+        max-width: 100%;
+    }
+
+    #result{
+        color: #204051;
+        width: 100%;
+        height: 290px;
+        margin-top: 15px;
+        margin-left: 1%;
+        background: #84a9ac;
+        outline: none;
+    }
+
+    #options {        
+        background: #3b6978;        
+        display: inline-block;
+        float: right;
+        width: 20%;        
+        height: 780px;
+        margin-top: 5px;
+    }
+
+    #optionButton{        
+        margin-top: 50%;
+    }
+
+    #field{        
+        display: inline-block;
+        width: 70%;
+        margin-top: 20px;
+    }
+
+    #buttons{
+        margin: 0;
+        padding: 0;
+        background: #84a9ac;
+    }
+
+    .newOptionChild{
+        margin-bottom: 5px;
+    }
+
+    .selectOptionButton{
+        margin-left: 10px;
+        background-color: #84a9ac;
+        border: none;
+        color: #e4e3e3;
+        /*padding: 15px 32px;*/
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        /*font-size: 16px;*/
+        /*margin: 4px 2px;*/
+        cursor: pointer;
+        width: 80px;
+        height: 20px;
+        outline: none; 
+    }

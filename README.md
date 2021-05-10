@@ -1,3 +1,3 @@
-# Public-work
+This generator was made to create registries more faster and easier then earilier. Only generate fields and a little structure yet.
 
-This repository contain all of my public work. I will be upload more projects to this repository later. 
+The generator is under development.
